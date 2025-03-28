@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Team Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <p id="credits">by al1enn</p>
+
+    <div class="container">
+        <h1>Team Generator & Name Picker</h1>
+
+        <div class="dropdown">
+            <label for="modeSelect">Mód kiválasztása:</label>
+            <select id="modeSelect">
+                <option value="team">Teamgenerator</option>
+                <option value="name">NamePicker</option>
+            </select>
+        </div>
+
+        <textarea id="nameList" placeholder="Írd be a neveket"></textarea>
+
+        
+        <div id="teamOptions" class="hidden">
+            <label for="teamCount">Hány csapat legyen?</label>
+            <select id="teamCount">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <button id="generate">Sorsolás</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
