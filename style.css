@@ -229,4 +229,43 @@ header {
   .casino-header:hover .casino-logo {
     transform: scale(1.1);
   }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discord-invite {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.discord-icon {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.discord-text {
+  transition: color 0.3s, transform 0.3s;
+}
+
+/* Hover effekt a linkre */
+.discord-invite:hover .discord-text {
+  color: #5865F2; /* Discord kék */
+  transform: scale(1.1);
+}
+
+.discord-invite:hover .discord-icon {
+  transform: scale(1.1);
+}
+
   
