@@ -1,0 +1,980 @@
+/* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Light:wght@300;400;700&display=swap');
+
+:root {
+    /* Új, glow-os színek */
+    --primary-glow: #00FFFF; /* Aqua/Cian glow */
+    --secondary-glow: #FF00FF; /* Magenta glow */
+    --tertiary-glow: #FFD700; /* Arany glow */
+    --dark-bg: #0A0A0A; /* Sötétebb háttér */
+    --darker-bg: #121212; /* Még sötétebb háttér elemekhez */
+    --text-light: #e0e0e0;
+    --text-dark: #bbb;
+    --header-bg: rgba(12, 12, 12, 0.95); /* Szinte áttetsző header */
+    --card-bg: rgba(18, 18, 18, 0.9); /* Szinte áttetsző kártya háttér */
+    --border-color: rgba(255, 255, 255, 0.08); /* Nagyon finom szegély */
+    --button-bg: #222222;
+    --button-hover-bg: #333333;
+
+    /* Egyedi glow színek a kártyákhoz */
+    --blue-glow: #ff00f2;
+    --green-glow: #00FF00;
+    --purple-glow: #8A2BE2;
+    --orange-glow: #FFA500;
+    --red-glow: #FF4500;
+    --grey-glow: #555555; /* A 'coming soon' kártyákhoz */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    min-height: 100vh;
+    font-family: 'Roboto Light', sans-serif;
+    color: var(--text-light);
+    background-color: var(--dark-bg); /* Sima sötét háttér */
+    overflow-x: hidden; /* Elrejti a vízszintes scrollbart */
+    cursor: none; /* Egyedi kurzor miatt elrejtjük az alapértelmezettet */
+    background: url('https://i.pinimg.com/736x/79/8b/4a/798b4a0b1baa327ba013c0b4dd376599.jpg') no-repeat center top fixed; /* Updated background position */
+    background-size: cover; /* Ensures full coverage and prevents pixelation */
+}
+
+/* Custom Cursor with dynamic glow */
+.custom-cursor {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0, 255, 255, 0) 70%);
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    filter: blur(5px);
+    transition: width 0.1s ease, height 0.1s ease;
+    animation: hueRotate 10s infinite linear; /* Színváltó animáció */
+}
+
+@keyframes hueRotate {
+    0% { filter: hue-rotate(0deg) blur(5px); }
+    100% { filter: hue-rotate(360deg) blur(5px); }
+}
+
+
+body:active .custom-cursor {
+    width: 35px;
+    height: 35px;
+}
+
+/* Background "movement" via cursor glow */
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px; /* Nagyobb glow terület */
+    height: 200px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0, 255, 255, 0) 60%);
+    filter: blur(50px); /* Erős elmosás */
+    opacity: 0.15; /* Finomabb hatás */
+    animation: hueRotate 10s infinite linear; /* Színváltás a glow-hoz */
+    z-index: -1; /* Háttérben legyen */
+}
+
+
+/* Header and Navigation */
+header {
+    background-color: var(--header-bg);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px); /* Átlátszó hatás */
+}
+
+.top-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center; /* Középre igazítás */
+    align-items: center;
+    padding: 0 20px;
+}
+
+.top-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-item {
+    color: var(--text-light);
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden; /* A glow hatás elrejtéséhez */
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--primary-glow) 50%, rgba(255,255,255,0) 100%);
+    transition: left 0.3s ease-in-out;
+    mix-blend-mode: overlay; /* Szebb glow */
+    opacity: 0.3; /* Finomabb csík */
+}
+
+.nav-item:hover::before {
+    left: 100%;
+}
+
+.nav-item:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--primary-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Enyhe glow */
+}
+
+.nav-item.active {
+    color: var(--primary-glow);
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+    border: 1px solid var(--primary-glow);
+}
+
+.nav-item i {
+    font-size: 1.2rem;
+}
+
+
+/* Main Content - Casino Grid */
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.casino-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Kicsit nagyobb min-width */
+    gap: 40px; /* Nagyobb rés a kártyák között */
+    padding: 20px 0;
+}
+
+.casino-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 25px; /* Belülről is nagyobb tér */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.casino-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0,0,0,0) 70%);
+    opacity: 0;
+    filter: blur(40px); /* Erősebb elmosás */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    z-index: 0; /* A tartalom mögött */
+    transform: translate(0, 0);
+}
+
+.casino-card:hover .card-glow {
+    opacity: 0.3; /* Kicsit erősebb glow */
+    transform: translate(10%, 10%); /* Enyhe mozgás */
+}
+
+/* Egyedi glow színek a kártyákhoz */
+.casino-card:nth-child(1) .card-glow { background: radial-gradient(circle, var(--blue-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(2) .card-glow { background: radial-gradient(circle, var(--green-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(3) .card-glow { background: radial-gradient(circle, var(--purple-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(4) .card-glow { background: radial-gradient(circle, var(--orange-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(5) .card-glow { background: radial-gradient(circle, var(--red-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(6) .card-glow { background: radial-gradient(circle, var(--grey-glow) 0%, rgba(0,0,0,0) 70%); }
+.casino-card:nth-child(7) .card-glow { background: radial-gradient(circle, var(--primary-glow) 0%, rgba(0,0,0,0) 70%); } /* vissza az első glow-ra */
+
+
+.card-content {
+    position: relative; /* A glow fölött legyen */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%; /* Kitölti a kártyát */
+}
+
+.casino-logo-wrapper {
+    width: 120px; /* Nagyobb logó wrapper */
+    height: 120px;
+    border-radius: 50%;
+    /* REMOVED BACKGROUND COLOR - This was causing the clash with internal image backgrounds */
+    /* background-color: rgba(255, 255, 255, 0.05); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    overflow: hidden; /* Crucial for clipping the image to a circle */
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.casino-logo {
+    width: 100%; /* Make image fill the wrapper */
+    height: 100%; /* Make image fill the wrapper */
+    object-fit: cover; /* Crop the image to fit the circular wrapper */
+    border: none !important;
+    outline: none !important;
+}
+
+.casino-card h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem; /* Nagyobb cím */
+    color: var(--primary-glow);
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* RGB érték használata */
+}
+
+.casino-card .description {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    line-height: 1.6; /* Kicsit nagyobb sorköz */
+    flex-grow: 1; /* Hogy kitöltse a rendelkezésre álló helyet */
+    letter-spacing: 0.5px; /* Finom betűtávolság */
+    text-shadow: 0 0 2px rgba(0,0,0,0.5); /* Enyhe árnyék a jobb olvashatóságért */
+}
+
+/* Modern and enhanced tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Slightly more space between tags */
+    margin-bottom: 25px; /* More space below tags */
+}
+
+.tags span {
+    background-color: rgba(0, 255, 255, 0.1); /* Subtle background */
+    color: var(--primary-glow);
+    padding: 8px 16px; /* Adjusted padding */
+    border-radius: 25px; /* More rounded pills */
+    font-size: 0.95rem; /* Slightly larger font */
+    font-weight: 500; /* Medium weight for readability */
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1); /* Subtle inner glow */
+    transition: all 0.3s ease; /* Smooth transitions for all properties */
+    text-transform: uppercase; /* Make tags slightly more prominent */
+    letter-spacing: 0.5px;
+}
+
+.tags span:hover {
+    transform: translateY(-2px) scale(1.03); /* Lift and slightly enlarge on hover */
+    background-color: rgba(0, 255, 255, 0.2); /* Darker background on hover */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Enhanced glow on hover */
+    color: #fff; /* White text on hover for contrast */
+}
+
+/* Special promocode design */
+.promocode {
+    background: linear-gradient(45deg,  #330000,  #330000); /* Adjusted to match your desired color */
+    color: #000; /* Adjusted text color for contrast */
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    text-shadow: none;
+    box-shadow:
+        0 0 10px rgba(255, 215, 0, 0.3),
+        0 0 20px rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.promocode:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 165, 0, 0.4);
+    background: linear-gradient(45deg,   #330000, #330000);
+}
+
+
+.visit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+    color: #fff;
+    padding: 14px 28px; /* Nagyobb gomb */
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4); /* RGB érték használata */
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.visit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6); /* RGB érték használata */
+    background: linear-gradient(45deg, var(--secondary-glow), var(--primary-glow));
+}
+
+.visit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+    z-index: 1;
+}
+
+.visit-btn:hover::before {
+    left: 100%;
+}
+
+.visit-btn.disabled {
+    background: #444;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+}
+.visit-btn.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Giveaway Section */
+.giveaway-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 40px;
+    margin-top: 50px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.giveaway-section::before { /* Section glow */
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, rgba(0,0,0,0) 70%); /* RGB érték használata */
+    filter: blur(50px);
+    z-index: 0;
+    animation: pulseGlow 4s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { opacity: 0.05; transform: scale(1); }
+    to { opacity: 0.1; transform: scale(1.02); }
+}
+
+.giveaway-section h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    color: var(--primary-glow);
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* RGB érték használata */
+    position: relative;
+    z-index: 1;
+}
+
+.giveaway-section .tagline {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.giveaway-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.prize-info-box {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    text-align: left;
+    width: 350px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.prize-info-box::before { /* Inner glow for prize box */
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, rgba(0,0,0,0) 70%); /* RGB érték használata */
+    filter: blur(30px);
+    z-index: 0;
+}
+
+.prize-info-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--tertiary-glow);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* RGB érték használata */
+    position: relative;
+    z-index: 1;
+}
+
+.prize-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-glow);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.prize-description {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.spinning-wheel-container {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 0 25px rgba(0, 255, 255, 0.2); /* RGB érték használata */
+}
+
+.spinning-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    will-change: transform; /* Teljesítmény optimalizálás */
+}
+
+.user-card {
+    width: 100px; /* Kicsit nagyobb kártya */
+    height: 80px; /* Fix magasság */
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px; /* Távolság a kártyák között */
+    padding: 10px;
+    font-family: 'Roboto Light', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    flex-shrink: 0; /* Megakadályozza, hogy összenyomódjanak */
+}
+
+.user-card.placeholder {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-style: dashed;
+    color: var(--text-dark);
+    font-style: italic;
+}
+
+.user-card img {
+    width: 50px; /* Kicsit kisebb avatar, hogy elférjen a név */
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    border: 2px solid var(--primary-glow);
+    object-fit: cover;
+}
+
+.action-btn {
+    background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4); /* RGB érték használata */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 10px;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6); /* RGB érték használata */
+    background: linear-gradient(45deg, var(--secondary-glow), var(--primary-glow));
+}
+
+.action-btn i {
+    font-size: 1.1rem;
+}
+
+.action-btn.disabled {
+    background: #444;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+    transform: none;
+}
+
+.action-btn.disabled:hover {
+    background: #444;
+    box-shadow: none;
+}
+
+.streamer-only {
+    /* Style for streamer only buttons */
+    /* background: linear-gradient(45deg, #FF6F00, #FFD700); /* Különböző szín */
+    /* box-shadow: 0 5px 15px rgba(255, 111, 0, 0.4); */
+}
+.streamer-only:hover {
+    /* background: linear-gradient(45deg, #FFD700, #FF6F00); */
+}
+
+.registered-users-section {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 30px;
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.registered-users-section h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#registeredUsersList {
+    list-style: none;
+    max-height: 250px; /* Max magasság scrollbarral */
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#registeredUsersList li {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 1rem;
+    color: var(--text-light);
+    transition: background-color 0.2s ease;
+}
+
+#registeredUsersList li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+#registeredUsersList li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Winner Modal */
+.winner-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.winner-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--darker-bg);
+    border: 2px solid var(--primary-glow);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7); /* RGB érték használata */
+    animation: fadeInScale 0.4s ease-out;
+    max-width: 600px;
+    width: 90%;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-content .close-button:hover {
+    color: var(--primary-glow);
+}
+
+.modal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--tertiary-glow);
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); /* RGB érték használata */
+}
+
+.modal-text {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.modal-text.winner-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-glow);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* RGB érték használata */
+}
+
+.modal-text.prize-info {
+    font-style: italic;
+    color: var(--secondary-glow);
+    margin-bottom: 30px;
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--header-bg);
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    margin-top: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.social-icons {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: var(--text-light);
+    font-size: 1.8rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+    color: var(--primary-glow);
+    transform: translateY(-3px) scale(1.1);
+}
+
+footer p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .casino-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    .casino-card {
+        padding: 20px;
+    }
+    .casino-card h3 {
+        font-size: 1.6rem;
+    }
+    .casino-logo-wrapper {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+    .visit-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    .giveaway-section h1 {
+        font-size: 2.2rem;
+    }
+    .giveaway-section .tagline {
+        font-size: 1.1rem;
+    }
+    .prize-info-box, .spinning-wheel-container {
+        width: 100%;
+        max-width: 350px; /* Fix width for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .nav-item {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+    main {
+        padding: 15px;
+        margin-top: 20px;
+    }
+    .casino-grid {
+        gap: 20px;
+    }
+    .giveaway-section {
+        padding: 25px;
+    }
+    .giveaway-section h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .giveaway-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .action-btn {
+        font-size: 0.9rem;
+        padding: 12px 20px;
+        gap: 8px;
+    }
+    .modal-title {
+        font-size: 1.8rem;
+    }
+    .modal-text.winner-name {
+        font-size: 1.5rem;
+    }
+    .modal-text.prize-info {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .casino-grid {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+    }
+    .casino-card {
+        padding: 15px;
+    }
+    .casino-card h3 {
+        font-size: 1.4rem;
+    }
+    .casino-logo-wrapper {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+    .visit-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .giveaway-section h1 {
+        font-size: 1.5rem;
+    }
+    .giveaway-section .tagline {
+        font-size: 1rem;
+    }
+    .action-btn {
+        font-size: 0.8rem;
+        padding: 10px 15px;
+        gap: 6px;
+    }
+    .registered-users-section {
+        padding: 15px;
+        max-width: 100%;
+    }
+    .registered-users-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    #registeredUsersList {
+        max-height: 180px;
+        padding: 8px;
+    }
+    #registeredUsersList li {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+    .modal-content {
+        padding: 25px;
+    }
+    .modal-title {
+        font-size: 1.5rem;
+    }
+    .modal-text.winner-name {
+        font-size: 1.2rem;
+    }
+    .modal-text.prize-info {
+        font-size: 0.9rem;
+    }
+    .close-button {
+        font-size: 1.5rem;
+        top: 10px;
+        right: 15px;
+    }
+}
+
+
+
+.tags span {
+    background-color: rgba(0, 255, 255, 0.15);
+    color: var(--primary-glow);
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.tags span:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(7, 7, 7, 0.4);
+}
+
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+
+.promocode {
+    background: linear-gradient(45deg,  #330000,  #330000);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    text-shadow: none;
+    box-shadow:
+        0 0 10px rgba(255, 215, 0, 0.3),
+        0 0 20px rgba(255, 165, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.promocode:hover {
+    transform: scale(1.08);
+    box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 165, 0, 0.4);
+    background: linear-gradient(45deg,   #330000, #330000);
+}
