@@ -609,4 +609,22 @@ body {
         text-align: center;
         margin-top: 0.8rem;
     }
+@media (max-width: 768px) {
+    .appointment-table th,
+    .appointment-table td {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .appointment-table th:nth-child(3),
+    .appointment-table td:nth-child(3),
+    .appointment-table th:nth-child(4),
+    .appointment-table td:nth-child(4) {
+        display: table-cell;
+        width: auto;
+    }
+
+    .appointment-table-wrapper {
+        border-radius: 0.5rem;
+    }
 }
