@@ -116,6 +116,11 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    display: flex; /* Flexbox biztosítása */
+    align-items: center; /* Vertikális középre igazítás */
+    justify-content: space-between; /* Elemek elosztása */
+    flex-wrap: wrap; /* Mobilon törhet */
+    gap: 1rem; /* Kisebb rés a mobilon */
 }
 .app-header .logo-wrapper {
     display: flex;
@@ -150,6 +155,12 @@ body {
 @media (max-width: 768px) {
     .app-header {
         padding: 0.8rem 1rem;
+        justify-content: center; /* Mobilon középre a logo és a gomb */
+    }
+    .app-header .logo-wrapper {
+        flex-basis: 100%; /* A logó vegye fel a teljes szélességet */
+        justify-content: center; /* Középre igazítás */
+        margin-bottom: 1rem; /* Margó a gomb és a logó között */
     }
     .app-header .logo-wrapper img {
         height: 3rem;
@@ -158,6 +169,10 @@ body {
     }
     .app-header .title {
         font-size: 1.8rem;
+    }
+    .app-header .btn {
+        width: 100%; /* A kijelentkezés gomb teljes széles legyen mobilon */
+        max-width: 200px; /* Max szélesség a gombnak */
     }
 }
 
@@ -429,7 +444,7 @@ body {
 
 
 .appointment-table-wrapper {
-    overflow-x: auto;
+    overflow-x: auto; /* Ez továbbra is hasznos lehet nagyon széles táblázat esetén, de a kártya nézet megelőzi a problémát */
     border-radius: 0.75rem;
     box-shadow: var(--shadow-xl);
     border: 1px solid var(--border-color);
@@ -559,6 +574,7 @@ body {
         border: 0;
         box-shadow: none;
         background-color: transparent;
+        padding: 0 1rem; /* Belső padding a kártyákhoz */
     }
     .appointment-table {
         table-layout: auto; /* Mobilon visszaáll auto-ra */
@@ -568,15 +584,25 @@ body {
         box-shadow: none;
     }
     .appointment-table thead {
-        border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px;
-        overflow: hidden; padding: 0; position: absolute; width: 1px;
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    .appointment-table tbody {
+        display: block; /* Hogy a tr-ek blokk elemek legyenek */
+        width: 100%;
     }
     .appointment-table tr {
         background-color: var(--panel-bg);
         border: 1px solid var(--border-color);
         border-radius: 0.75rem;
         display: block;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.5rem; /* Nagyobb margó a kártyák között */
         box-shadow: 0 6px 15px rgba(0,0,0,0.5);
         transition: transform 0.2s ease;
     }
@@ -587,9 +613,10 @@ body {
     .appointment-table td {
         border-bottom: 1px solid var(--border-color);
         display: block;
-        font-size: 0.9em;
+        font-size: 0.95em; /* Kicsit nagyobb betűméret */
         text-align: right;
         padding: 1rem 1.4rem;
+        position: relative; /* Pozícionáláshoz */
     }
     .appointment-table td::before {
         content: attr(data-label) ": ";
@@ -599,32 +626,22 @@ body {
         color: var(--text-secondary);
         font-size: 0.85em;
         margin-right: 0.5rem;
+        position: absolute; /* Fix pozíció */
+        left: 1.4rem; /* Paddinghoz igazítva */
     }
     .appointment-table td:last-child {
         border-bottom: 0;
     }
     .appointment-table .status-badge {
         float: none;
-        display: block;
+        display: inline-block; /* Hogy ne vegyen fel teljes szélességet */
         text-align: center;
         margin-top: 0.8rem;
-    }
-@media (max-width: 768px) {
-    .appointment-table th,
-    .appointment-table td {
-        padding: 0.8rem;
-        font-size: 0.85rem;
+        min-width: 100px; /* Minimum szélesség a badge-nek */
     }
 
-    .appointment-table th:nth-child(3),
-    .appointment-table td:nth-child(3),
-    .appointment-table th:nth-child(4),
-    .appointment-table td:nth-child(4) {
-        display: table-cell;
-        width: auto;
-    }
-
-    .appointment-table-wrapper {
-        border-radius: 0.5rem;
+    /* Utolsó cella, ha nincs címkéje */
+    .appointment-table td:empty {
+        display: none; /* Üres cellák elrejtése */
     }
 }
