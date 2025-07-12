@@ -5,60 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jégvarázs - Heti Szerelések</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-astro-dark text-primary min-h-screen">
-    <nav class="app-header flex justify-between items-center">
+<body class="bg-dark-blue text-white min-h-screen">
+    <nav class="app-header">
         <a href="dashboard.html" class="logo-wrapper">
-            <img src="https://scontent.fbud7-3.fna.fbcdn.net/v/t39.30808-6/308205810_529236395870033_4423189269356599666_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MpL-n6X2FLMQ7kNvwHGAr7h&_nc_oc=AdkTUfeobRm63e_c0hrqtmHq_e7TN10vPmlto7wUROXVwANo8khupg7sRLZmlxeMH5wXTXC79voQt9g7iPWNttw2&_nc_zt=23&_nc_ht=scontent.fbud7-3.fna&_nc_gid=Cs0PUcIInWZik51tHY7bzw&oh=00_AfTVZMZfPwN3-aeXFoShzRprBzNozg-R2UUJLp1I46TC0A&oe=68773E3D" alt="Jégvarázs Logo">
-            <span class="title">Jégvarázs</span>
+            <img src="https://scontent.fbud7-3.fna.fbcdn.net/v/t39.30808-6/308205810_529236395870033_4423189269356599666_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MpL-n6X2FLMQ7kNvwEyvnYQ&_nc_oc=AdmJ-mU5BWl3vJ-G0sORTMRSu964SqDn0dM57Qi1LPag5LtM2KeLs6Sz8BrBH9tSL-OO5EnsiskWbReeudSORA-a&_nc_zt=23&_nc_ht=scontent.fbud7-3.fna&_nc_gid=pwklrd36WNBsOtB45gd7vA&oh=00_AfSIYbIZbh1fr4OJ_4tfEIp-KoD85Q7p4N3g6OPYeE542w&oe=68781F3D" alt="Jégvarázs Logo">
+            <span class="site-title">Jégvarázs</span>
         </a>
-        <button
-            id="logoutButton"
-            class="btn btn-danger"
-        >
-            Kijelentkezés
-        </button>
+        <button id="logoutButton" class="btn btn-secondary">Kijelentkezés</button>
     </nav>
 
-    <div class="container mx-auto p-6">
-        <h2 class="main-title text-center">Heti szerelések</h2>
+    <div class="main-content">
+        <h2 class="section-title text-center">Heti szerelési feladatok</h2>
 
-        <div class="team-selector">
-            <label for="teamSelect">Csapat kiválasztása:</label>
+        <div class="team-selector-section">
+            <label for="teamSelect" class="text-light-blue font-semibold">Csapat kiválasztása:</label>
             <div class="select-wrapper">
-                <select id="teamSelect">
+                <select id="teamSelect" class="form-select">
                     <option value="roli_bandi">Roli és Bandi</option>
                     <option value="dani_laci">Dani és Laci</option>
                 </select>
             </div>
+            <p id="currentTeamDisplay" class="current-team-info">Jelenleg kiválasztva: Roli és Bandi</p>
         </div>
-        <p id="currentTeamDisplay" class="mb-6">Jelenleg kiválasztva: Roli és Bandi</p>
         
-        <div class="appointment-table-wrapper">
-            <table class="appointment-table">
-                <thead>
-                    <tr>
-                        <th>Dátum</th>
-                        <th>Idő</th>
-                        <th>Cím</th>
-                        <th>Ügyfél neve</th>
-                        <th>Telefon</th>
-                        <th>Klím kW</th>
-                        <th>Státusz</th>
-                        <th>Leírás</th>
-                    </tr>
-                </thead>
-                <tbody id="appointmentsTableBody">
-                    </tbody>
-            </table>
-        </div>
+        <div id="appointmentsGrid" class="appointments-grid">
+            </div>
 
-        <p id="loadingMessage" class="text-secondary text-lg text-center mt-8">Feladatok betöltése...</p>
-        <p id="errorMessage" class="text-danger-color text-lg text-center mt-8 hidden">Hiba a feladatok betöltésekor.</p>
-        <p id="noAppointmentsMessage" class="text-secondary text-lg text-center mt-8 hidden">Nincsenek aktuális szerelési feladatok.</p>
+        <p id="loadingMessage" class="status-message text-center mt-8">Feladatok betöltése...</p>
+        <p id="errorMessage" class="status-message text-error text-center mt-8 hidden">Hiba a feladatok betöltésekor.</p>
+        <p id="noAppointmentsMessage" class="status-message text-light-blue text-center mt-8 hidden">Nincsenek aktuális szerelési feladatok.</p>
     </div>
 
-    <script src="dashboard.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
