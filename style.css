@@ -1,669 +1,493 @@
-/* --- Astro 5.11 Inspirált Színpaletta és Dizájn --- */
+/* --- Színpaletta és Alapok --- */
 :root {
-    --bg-astro-dark: #0A0D11;           /* Még sötétebb háttér */
-    --panel-bg: #1A1F26;                /* Panel/kártya háttér: Kékebb sötét szürke */
-    --text-primary: #EBF1F7;            /* Elsődleges szöveg: Nagyon világos szürke */
-    --text-secondary: #BCC5D2;          /* Másodlagos szöveg: Tompított kékes szürke */
-    --border-color: #333C48;            /* Vékony keret szín */
+    --color-dark-blue: #0A192F;         /* Mély sötétkék háttér */
+    --color-medium-blue: #1C2D4A;       /* Panelek, kártyák háttere */
+    --color-light-blue: #88CCF1;        /* Akcent szín, kiemelések, címek */
+    --color-white: #EAEAEA;             /* Általános szöveg, gombok szövege */
+    --color-gray: #B0BACC;              /* Másodlagos szöveg, placeholder */
+    --color-green: #6EE7B7;             /* Siker/Befejezett státusz */
+    --color-red: #EF4444;               /* Hiba/Kijelentkezés gomb */
 
-    /* Fő kiemelő szín: Vibráló elektromos kék (Astro neon-kék érzet) */
-    --accent-color-light: #00BFFF;      /* Deep Sky Blue */
-    --accent-color-dark: #0099CC;       /* Sötétebb árnyalat hoverre */
-    --accent-glow-strength: 0 0 15px rgba(0, 191, 255, 0.7); /* Eredeti glow */
-    --accent-glow-soft: 0 0 8px rgba(0, 191, 255, 0.4);   /* Eredeti glow */
-
-    --danger-color: #FF5C5C;            /* Piros (kijelentkezés, hiba) */
-    --danger-color-hover: #E63946;
-
-    /* Státusz színek */
-    --status-in-progress: var(--accent-color-light); /* Folyamatban: Kiemelő szín */
-    --status-completed: #50FA7B;        /* Befejezett: Élénk zöld */
-    --status-completed-glow: 0 0 10px rgba(80, 250, 123, 0.5); /* Zöld glow */
+    --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 8px 20px rgba(0, 0, 0, 0.4);
+    --shadow-deep: 0 12px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* --- Globális Reset és Alapvető Stílusok --- */
-html {
-    box-sizing: border-box;
-    font-size: 16px; /* Alap betűméret */
-}
+/* Globális reset és alapstílusok */
 *, *::before, *::after {
-    box-sizing: inherit;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
-    font-family: 'Inter', 'Roboto', 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Nunito Sans', sans-serif; /* Az új betűtípus */
     line-height: 1.6;
-    color: var(--text-primary);
-    background-color: var(--bg-astro-dark);
+    color: var(--color-white);
+    background-color: var(--color-dark-blue);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden; /* Megakadályozza a vízszintes scrollbart, ha valami kilóg */
-    transition: background-color 0.3s ease;
+    overflow-x: hidden;
 }
 
 /* Scrollbar stílus */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-astro-dark); }
-::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+::-webkit-scrollbar-track { background: var(--color-dark-blue); }
+::-webkit-scrollbar-thumb { background: var(--color-medium-blue); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-light-blue); }
 
-/* --- Utility / Segédosztályok (Tailwind ihletésű) --- */
+/* --- Utility/Segédosztályok (minimális Tailwind-szerű) --- */
 .flex { display: flex; }
+.flex-col { flex-direction: column; }
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
-.flex-col { flex-direction: column; }
-.flex-grow { flex-grow: 1; }
-
-.p-4 { padding: 1rem; } .p-6 { padding: 1.5rem; } .p-8 { padding: 2rem; }
-.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; } .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; } .px-4 { padding-left: 1rem; padding-right: 1rem; }
-.mt-2 { margin-top: 0.5rem; } .mt-4 { margin-top: 1rem; } .mt-6 { margin-top: 1.5rem; } .mt-8 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 0.25rem; } .mb-2 { margin-bottom: 0.5rem; } .mb-3 { margin-bottom: 0.75rem; } .mb-4 { margin-bottom: 1rem; } .mb-6 { margin-bottom: 1.5rem; }
-.mr-4 { margin-right: 1rem; } .gap-4 { gap: 1rem; } .gap-6 { gap: 1.5rem; }
-
-.min-h-screen { min-height: 100vh; } .w-full { width: 100%; }
-.max-w-xs { max-width: 20rem; } .max-w-md { max-width: 28rem; } .max-w-lg { max-width: 32rem; }
-.h-10 { height: 2.5rem; } .h-16 { height: 4rem; } .h-24 { height: 6rem; }
-
-.rounded-md { border-radius: 0.375rem; } .rounded-lg { border-radius: 0.5rem; } .rounded-xl { border-radius: 0.75rem; }
-.shadow-sm { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); } .shadow-md { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); }
-.shadow-lg { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); } .shadow-xl { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); }
-
-/* Betűméretek */
-.text-xs { font-size: 0.75rem; }
-.text-sm { font-size: 0.875rem; }
-.text-base { font-size: 1rem; }
-.text-lg { font-size: 1.125rem; }
-.text-xl { font-size: 1.25rem; }
-.text-2xl { font-size: 1.5rem; }
-.text-3xl { font-size: 1.875rem; }
-.text-4xl { font-size: 2.25rem; }
-
-.font-bold { font-weight: 700; } .font-semibold { font-weight: 600; } .font-medium { font-weight: 500; }
-.text-center { text-align: center; } .italic { font-style: italic; } .leading-tight { line-height: 1.25; }
-
-/* Középre igazító konténer */
-.container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    max-width: 1536px;
-}
-@media (min-width: 640px) { .container { padding-left: 2rem; padding-right: 2rem; } }
-@media (min-width: 768px) { .container { padding-left: 2.5rem; padding-right: 2.5rem; } }
-
-/* Rejtett elem */
+.w-full { width: 100%; }
+.min-h-screen { min-height: 100vh; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.text-center { text-align: center; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.text-error { color: var(--color-red); }
 .hidden { display: none; }
 
-/* Színnév térképezés */
-.bg-astro-dark { background-color: var(--bg-astro-dark); }
-.bg-panel { background-color: var(--panel-bg); }
-.text-primary { color: var(--text-primary); }
-.text-secondary { color: var(--text-secondary); }
-.border-primary { border-color: var(--border-color); }
+/* Szín segédosztályok */
+.bg-dark-blue { background-color: var(--color-dark-blue); }
+.text-white { color: var(--color-white); }
+.text-light-blue { color: var(--color-light-blue); }
+.text-gray { color: var(--color-gray); }
+
+/* --- Gombok --- */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700; /* Félkövér gomb szöveg */
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background-color: var(--color-light-blue);
+    color: var(--color-dark-blue);
+    box-shadow: var(--shadow-medium);
+}
+.btn-primary:hover {
+    background-color: #63B5DE; /* Kicsit sötétebb kék hoverre */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-deep);
+}
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-light);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-light-blue);
+    border: 2px solid var(--color-light-blue);
+}
+.btn-secondary:hover {
+    background-color: var(--color-light-blue);
+    color: var(--color-dark-blue);
+    box-shadow: var(--shadow-medium);
+}
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* --- Login oldal specifikus stílusok --- */
+.bg-gradient {
+    background: linear-gradient(135deg, var(--color-dark-blue) 0%, #051325 100%);
+}
+
+.login-container {
+    background-color: var(--color-medium-blue);
+    padding: 3rem 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-deep);
+    width: 90%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(136, 204, 241, 0.2); /* Finom keret */
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.login-header .logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid var(--color-light-blue);
+    margin-bottom: 1rem;
+    box-shadow: 0 0 15px rgba(136, 204, 241, 0.7); /* Kék ragyogás */
+    animation: pulseGlow 2s infinite alternate; /* Animált ragyogás */
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 10px rgba(136, 204, 241, 0.5); }
+    to { box-shadow: 0 0 20px rgba(136, 204, 241, 0.8); }
+}
+
+.login-header .title {
+    font-size: 2.5rem;
+    font-weight: 900; /* Extra félkövér */
+    color: var(--color-light-blue);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 10px rgba(136, 204, 241, 0.6);
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--color-gray);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background-color: var(--color-dark-blue);
+    border: 1px solid var(--color-medium-blue);
+    border-radius: 0.5rem;
+    color: var(--color-white);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="password"]::placeholder {
+    color: var(--color-gray);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: var(--color-light-blue);
+    box-shadow: 0 0 0 3px rgba(136, 204, 241, 0.3);
+    outline: none;
+    background-color: #0F1D33;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 2rem 1.2rem;
+    }
+    .login-header .logo {
+        width: 70px;
+        height: 70px;
+    }
+    .login-header .title {
+        font-size: 2rem;
+    }
+}
 
 
-/* --- HEADER / NAVIGÁCIÓ --- */
+/* --- Dashboard oldal specifikus stílusok --- */
 .app-header {
-    background-color: var(--panel-bg);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 1.5rem;
-    box-shadow: var(--shadow-md);
+    background-color: var(--color-medium-blue);
+    border-bottom: 1px solid var(--color-dark-blue);
+    padding: 1.2rem 1.5rem;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
     position: sticky;
     top: 0;
     z-index: 1000;
-    display: flex; /* Flexbox biztosítása */
-    align-items: center; /* Vertikális középre igazítás */
-    justify-content: space-between; /* Elemek elosztása */
-    flex-wrap: wrap; /* Mobilon törhet */
-    gap: 1rem; /* Kisebb rés a mobilon */
 }
 .app-header .logo-wrapper {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s ease-in-out;
-}
-.app-header .logo-wrapper:hover {
-    transform: translateY(-3px);
 }
 .app-header .logo-wrapper img {
-    height: 3.5rem;
-    width: 3.5rem;
-    margin-right: 0.75rem;
-    filter: drop-shadow(var(--accent-glow-strength));
+    height: 3.2rem;
+    width: 3.2rem;
+    margin-right: 0.6rem;
     border-radius: 50%;
-    border: 3px solid var(--accent-color-light);
-    transition: all 0.3s ease;
+    border: 2px solid var(--color-light-blue);
+    box-shadow: 0 0 8px rgba(136, 204, 241, 0.5);
 }
-.app-header .logo-wrapper img:hover {
-    border-color: var(--accent-color-dark);
-}
-.app-header .title {
-    font-size: 2rem;
+.app-header .site-title {
+    font-size: 1.8rem;
     font-weight: 800;
-    color: var(--accent-color-light);
-    letter-spacing: 0.08em;
-    text-shadow: var(--accent-glow-soft);
+    color: var(--color-light-blue);
+    letter-spacing: 0.05em;
 }
 
 @media (max-width: 768px) {
     .app-header {
-        padding: 0.8rem 1rem;
-        flex-direction: column; /* Mobilon egymás alá a logó és a gomb */
-        justify-content: center; /* Középre igazítás */
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
     }
     .app-header .logo-wrapper {
-        flex-basis: auto; /* Alapértelmezett méret */
-        justify-content: center; /* Középre igazítás */
-        margin-bottom: 1rem; /* Margó a gomb és a logó között */
+        margin-bottom: 1rem;
+        justify-content: center;
     }
-    .app-header .logo-wrapper img {
-        height: 3rem;
-        width: 3rem;
-        margin-right: 0.5rem;
-    }
-    .app-header .title {
-        font-size: 1.8rem;
+    .app-header .site-title {
+        font-size: 1.6rem;
     }
     .app-header .btn {
-        width: 100%; /* A kijelentkezés gomb teljes széles legyen mobilon */
-        max-width: 200px; /* Max szélesség a gombnak */
+        width: 100%;
+        max-width: 200px;
     }
 }
 
-
-/* --- Általános Gomb Stílusok --- */
-.btn {
-    font-weight: 600;
-    padding: 0.85rem 1.8rem;
-    border-radius: 0.45rem;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    border: none;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    outline: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 1rem;
-}
-.btn:focus {
-    box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.3);
+.main-content {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.btn-primary {
-    background-color: var(--accent-color-light);
-    color: var(--bg-astro-dark);
-    box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
-}
-.btn-primary:hover {
-    background-color: var(--accent-color-dark);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 191, 255, 0.6);
-}
-.btn-primary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.btn-danger {
-    background-color: var(--danger-color);
-    color: var(--text-primary);
-    box-shadow: 0 6px 20px rgba(255, 92, 92, 0.3);
-}
-.btn-danger:hover {
-    background-color: var(--danger-color-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(255, 92, 92, 0.5);
-}
-.btn-danger:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-
-/* --- LOGIN PANEL --- */
-.login-panel {
-    background-color: var(--panel-bg);
-    border: 1px solid var(--border-color);
-    padding: 3rem 3.5rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-xl);
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(160deg, var(--panel-bg) 0%, #10161d 100%);
-    width: 100%;
-    max-width: 500px;
-}
-.login-panel::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -30%;
-    width: 160%;
-    height: 160%;
-    background: radial-gradient(circle at center, rgba(0, 191, 255, 0.15) 0%, transparent 60%);
-    opacity: 0.5;
-    z-index: 0;
-    animation: rotateAstro 50s linear infinite;
-}
-@keyframes rotateAstro {
-    from { transform: rotate(0deg); opacity: 0.5; }
-    50% { transform: rotate(180deg); opacity: 0.6; }
-    to { transform: rotate(360deg); opacity: 0.5; }
-}
-.login-panel > * {
-    position: relative;
-    z-index: 1;
-}
-
-.login-panel .login-header img {
-    height: 7rem;
-    width: 7rem;
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-light-blue);
     margin-bottom: 2.5rem;
-    filter: drop-shadow(var(--accent-glow-strength));
-    border-radius: 50%;
-    border: 4px solid var(--accent-color-light);
+    text-shadow: 0 0 10px rgba(136, 204, 241, 0.5);
+    letter-spacing: 0.05em;
 }
-.login-panel .login-title {
-    font-size: 3rem;
-    font-weight: 900;
-    margin-bottom: 3rem;
-    color: var(--accent-color-light);
-    text-shadow: var(--accent-glow-strength);
-}
-
-/* Input mezők */
-.login-panel input {
-    background-color: var(--bg-astro-dark);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 1rem 1.4rem;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-}
-.login-panel input::placeholder {
-    color: var(--text-secondary);
-}
-.login-panel input:focus {
-    border-color: var(--accent-color-light);
-    box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.4);
-    background-color: #11151a;
-}
-.login-panel label {
-    color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
-}
-
-/* Login gomb */
-.login-panel .btn-login {
-    width: 100%;
-    max-width: 280px;
-    margin-top: 2rem;
-    font-size: 1.25rem;
-}
-
-@media (max-width: 500px) {
-    .login-panel {
-        padding: 2rem 1.5rem;
-        border-radius: 0.75rem;
-    }
-    .login-panel .login-header img {
-        height: 5rem;
-        width: 5rem;
-        margin-bottom: 1.5rem;
-    }
-    .login-panel .login-title {
-        font-size: 2.2rem;
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
         margin-bottom: 2rem;
     }
-    .login-panel input {
-        padding: 0.8rem 1rem;
-    }
-    .login-panel label {
-        font-size: 0.9rem;
-    }
-    .login-panel .btn-login {
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
-    }
 }
 
-
-/* --- DASHBOARD - TÁBLÁZAT --- */
-.main-title {
-    color: var(--accent-color-light);
-    font-size: 3rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem; /* Enyhén csökkentett margó, mert jön a team választó */
-    text-shadow: var(--accent-glow-strength);
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@media (max-width: 768px) {
-    .main-title {
-        font-size: 2.2rem;
-        margin-bottom: 0.5rem;
-    }
-}
-
-/* Csapatválasztó stílusok */
-.team-selector {
+/* Csapatválasztó */
+.team-selector-section {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2.5rem; /* Margó a cím és a táblázat között */
-    flex-wrap: wrap; /* Hogy mobilon törjön */
-}
-.team-selector label {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    font-weight: 600;
-    margin-right: 0.5rem;
-    display: flex;
+    flex-direction: column; /* Mobilon stacked */
     align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    background-color: var(--color-medium-blue);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-light);
+    border: 1px solid rgba(136, 204, 241, 0.15);
 }
-.team-selector select {
-    background-color: var(--panel-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 0.7rem 1rem;
+.team-selector-section label {
+    font-size: 1.1rem;
+    margin-right: 0; /* Nincs jobbra margó mobilon */
+}
+.team-selector-section .select-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px; /* Max szélesség a selectnek */
+}
+.team-selector-section .form-select {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    background-color: var(--color-dark-blue);
+    border: 1px solid var(--color-medium-blue);
     border-radius: 0.5rem;
+    color: var(--color-white);
     font-size: 1rem;
-    appearance: none; /* Alapértelmezett nyíl eltüntetése */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
     outline: none;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-    min-width: 200px; /* Minimum szélesség */
+    transition: all 0.2s ease;
 }
-.team-selector select:hover {
-    border-color: var(--accent-color-dark);
-    background-color: #262d38;
+.team-selector-section .form-select:focus {
+    border-color: var(--color-light-blue);
+    box-shadow: 0 0 0 3px rgba(136, 204, 241, 0.3);
 }
-.team-selector select:focus {
-    border-color: var(--accent-color-light);
-    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.3);
-}
-
-/* Custom nyíl a selecthez */
-.select-wrapper {
-    position: relative;
-    display: inline-block;
-}
-.select-wrapper::after {
+.team-selector-section .select-wrapper::after {
     content: '▼';
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    font-size: 0.7rem;
+    color: var(--color-gray);
     position: absolute;
     right: 12px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
 }
-
-#currentTeamDisplay {
-    font-size: 1.5rem;
+.current-team-info {
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--text-secondary);
+    color: var(--color-gray);
     margin-top: 1rem;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(0, 191, 255, 0.1);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
-@media (max-width: 768px) {
-    .team-selector {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 1.5rem;
+@media (min-width: 768px) { /* Asztali nézet visszaállítása */
+    .team-selector-section {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.5rem;
     }
-    .team-selector select {
-        width: 100%;
-        max-width: 250px;
+    .team-selector-section label {
+        margin-right: 0.5rem;
     }
-    #currentTeamDisplay {
-        font-size: 1.2rem;
-        margin-top: 0.8rem;
+    .current-team-info {
+        font-size: 1.5rem;
     }
 }
 
 
-.appointment-table-wrapper {
-    overflow-x: auto; /* Ezt hagyjuk meg, ha mégis túl széles lenne valami */
+/* --- Feladat kártyák (Grid Layout) --- */
+.appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Reszponzív oszlopok */
+    gap: 1.5rem; /* Távolság a kártyák között */
+    padding-bottom: 2rem; /* Hogy a legalsó kártya ne tapadjon le */
+}
+
+.appointment-card {
+    background-color: var(--color-medium-blue);
+    padding: 1.5rem;
     border-radius: 0.75rem;
-    box-shadow: var(--shadow-xl);
-    border: 1px solid var(--border-color);
-    background-color: var(--panel-bg);
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(136, 204, 241, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* Hogy a border-radius érvényesüljön a dátum headernél */
+}
+.appointment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-deep);
 }
 
-.appointment-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: transparent;
-    table-layout: fixed; /* Fixed asztali nézeten */
+.card-header {
+    background-color: #2F4160; /* Sötétebb kék háttér a dátum konténernek */
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.5rem; /* Enyhén kerekített sarkok */
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem; /* Kiterjesztés és alul margó */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Kis árnyék */
 }
-.appointment-table th, .appointment-table td {
-    padding: 1rem 1.2rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-primary);
-    word-wrap: break-word;
-    white-space: normal; /* Fontos, hogy ez alapból normál legyen */
+
+.card-date-time {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-light-blue);
+    /* Az ikonhoz tartozó gap eltűnik */
 }
-.appointment-table th {
-    background-color: #262D38;
-    color: var(--text-primary);
+
+.card-status {
+    display: inline-block;
+    padding: 0.4em 0.8em;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.95rem;
-    letter-spacing: 0.1em;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    color: var(--color-dark-blue);
+}
+.card-status.status-in-progress {
+    background-color: var(--color-light-blue);
+}
+.card-status.status-completed {
+    background-color: var(--color-green);
 }
 
-/* Oszlopszélességek finomhangolása (összesen 100%) */
-.appointment-table th:nth-child(1), .appointment-table td:nth-child(1) { width: 10%; } /* Dátum */
-.appointment-table th:nth-child(2), .appointment-table td:nth-child(2) { width: 8%; } /* Idő */
-.appointment-table th:nth-child(3), .appointment-table td:nth-child(3) { width: 18%; } /* Cím */
-.appointment-table th:nth-child(4), .appointment-table td:nth-child(4) { width: 15%; } /* Ügyfél neve */
-.appointment-table th:nth-child(5), .appointment-table td:nth-child(5) { width: 14%; } /* Telefon */
-.appointment-table th:nth-child(6), .appointment-table td:nth-child(6) { width: 8%; } /* Klím kW */
-.appointment-table th:nth-child(7), .appointment-table td:nth-child(7) { width: 12%; } /* Státusz */
-.appointment-table th:nth-child(8), .appointment-table td:nth-child(8) { width: 15%; } /* Leírás */
-
-
-.appointment-table tbody tr {
-    transition: background-color 0.2s ease-in-out;
-}
-.appointment-table tbody tr:hover {
-    background-color: #2F3742;
-}
-.appointment-table tbody tr:last-child td {
-    border-bottom: none;
-}
-.appointment-table td {
-    vertical-align: middle;
-    font-size: 0.95rem;
+.card-body {
+    flex-grow: 1; /* Betölti a maradék helyet */
 }
 
-/* Kiemelt adatok a táblázatban */
-.highlight-text {
-    color: var(--accent-color-light);
-    font-weight: 600;
-    text-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+.card-item {
+    margin-bottom: 0.8rem;
 }
-.highlight-phone a {
-    color: var(--status-completed);
-    font-weight: 600;
-    text-decoration: none;
-    text-shadow: 0 0 5px rgba(80, 250, 123, 0.3);
-    transition: text-shadow 0.2s ease;
-}
-.highlight-phone a:hover {
-    text-shadow: 0 0 10px rgba(80, 250, 123, 0.6);
+.card-item:last-of-type {
+     /* Ha ez az utolsó item a card-body-ban, akkor nem kell alatta margó */
+    margin-bottom: 0;
 }
 
-.appointment-table .text-muted-small {
-    color: var(--text-secondary);
+
+.card-label {
     font-size: 0.85rem;
+    color: var(--color-gray);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.card-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.card-address .card-value {
+    font-size: 1.05rem;
+    color: var(--color-light-blue);
+}
+.card-address .card-sub-value {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    font-weight: 600;
     margin-top: 0.2rem;
 }
 
-/* Státusz jelző táblázatban */
-.status-badge {
-    display: inline-block;
-    padding: 0.5em 1em;
-    border-radius: 0.375rem;
-    font-size: 0.85rem;
+.card-phone a {
+    color: var(--color-green);
+    text-decoration: none;
     font-weight: 700;
-    text-transform: uppercase;
-    color: var(--bg-astro-dark);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
 }
-.status-badge.status-in-progress {
-    background-color: var(--status-in-progress);
-    box-shadow: 0 2px 10px rgba(0, 191, 255, 0.6);
+.card-phone a:hover {
+    color: #4CAF50;
+    text-decoration: underline;
 }
-.status-badge.status-completed {
-    background-color: var(--status-completed);
-    box-shadow: 0 2px 10px rgba(80, 250, 123, 0.6);
+
+/* A leírás rész stílusa visszaállítva a sima card-item-re */
+.card-description .card-value {
+    font-weight: 600; /* Marad félkövér a szöveg */
+    font-size: 0.95rem; /* Kicsit kisebb betűméret */
+    color: var(--color-gray); /* Szürke szín */
 }
 
 
-/* Hiba és töltés üzenetek */
-#loadingMessage, #errorMessage, #noAppointmentsMessage {
-    background-color: var(--panel-bg);
-    border: 1px solid var(--border-color);
-    padding: 1.8rem;
-    border-radius: 0.6rem;
-    margin-top: 2.5rem;
-    color: var(--text-primary);
-    font-weight: 500;
-    text-align: center;
-    box-shadow: var(--shadow-md);
-    font-size: 1.1rem;
+/* Üzenetek a dashboardon */
+.status-message {
+    background-color: var(--color-medium-blue);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-light);
+    font-weight: 600;
+    border: 1px solid rgba(136, 204, 241, 0.1);
 }
 #errorMessage {
-    border-color: var(--danger-color);
-    background-color: rgba(255, 92, 92, 0.15);
-    color: var(--danger-color);
-    font-weight: 700;
-    font-size: 1.2rem;
-}
-
-/* Reszponzivitás a táblázathoz (kártya stílus mobilon) */
-@media screen and (max-width: 768px) {
-    .appointment-table-wrapper {
-        border: 0;
-        box-shadow: none;
-        background-color: transparent;
-        padding: 0 1rem; /* Belső padding a kártyákhoz */
-    }
-    .appointment-table {
-        table-layout: auto; /* Mobilon visszaáll auto-ra */
-        min-width: unset;
-        background-color: transparent;
-        border: none;
-        box-shadow: none;
-    }
-    .appointment-table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-    .appointment-table tbody {
-        display: block; /* Hogy a tr-ek blokk elemek legyenek */
-        width: 100%;
-    }
-    .appointment-table tr {
-        background-color: var(--panel-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 0.75rem;
-        display: block;
-        margin-bottom: 1.5rem; /* Nagyobb margó a kártyák között */
-        box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-        transition: transform 0.2s ease;
-    }
-    .appointment-table tr:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-    }
-    .appointment-table td {
-        border-bottom: 1px solid var(--border-color);
-        display: flex; /* Flexbox a label és a tartalom mellé igazításához */
-        justify-content: space-between; /* Elosztja a labelt és a tartalmat */
-        align-items: center; /* Vertikális középre igazítás */
-        font-size: 0.95em; /* Kicsit nagyobb betűméret */
-        text-align: right;
-        padding: 0.8rem 1.4rem; /* Kisebb padding felül-alul */
-        word-break: break-word; /* Szavak tördelése, ha szükséges */
-        white-space: normal; /* Fontos, hogy ne legyen no-wrap */
-    }
-    .appointment-table td::before {
-        content: attr(data-label) ": ";
-        flex-shrink: 0; /* Ne zsugorodjon */
-        font-weight: bold;
-        text-transform: uppercase;
-        color: var(--text-secondary);
-        font-size: 0.85em;
-        margin-right: 0.8rem; /* Növelt margó */
-        text-align: left; /* Címke balra igazítása */
-    }
-    .appointment-table td:last-child {
-        border-bottom: 0;
-    }
-    .appointment-table .status-badge {
-        float: none;
-        display: inline-block;
-        text-align: center;
-        margin-top: 0.8rem; /* Kicsit feljebb van a badge a kép alapján, ha külön sorban volt */
-        min-width: 100px;
-        /* Lehetséges javítás: Ha a badge is flex elemen belül van, akkor align-self-end/start is lehet */
-        margin-left: auto; /* Jobbra igazítás flexboxban */
-    }
-
-    /* Különleges kezelés a cím és leírás celláknál, ha több soros tartalom van */
-    .appointment-table td[data-label="Cím"],
-    .appointment-table td[data-label="Leírás"] {
-        flex-direction: column; /* Ezek a cellák oszlop elrendezésűek legyenek */
-        align-items: flex-start; /* Balra igazítás */
-        text-align: left; /* Szöveg balra igazítása */
-    }
-    .appointment-table td[data-label="Cím"]::before,
-    .appointment-table td[data-label="Leírás"]::before {
-        margin-right: 0; /* Nincs jobbra margó */
-        margin-bottom: 0.4rem; /* Alatta legyen a szöveg */
-        position: static; /* Vegyük ki az abszolút pozícionálást */
-    }
-    .appointment-table td[data-label="Cím"] div.text-secondary {
-        width: 100%; /* Hogy a város és irányítószám is tördelődjön */
-        text-align: left; /* Balra igazítás */
-    }
-
-
-    /* Utolsó cella, ha nincs címkéje (korábbi hiba) - ezt már a JS oldalról kezeljük. */
-    /* A .appointment-table td:empty szabály valószínűleg nem kell, mert minden cellának van data-labelje */
+    border-color: var(--color-red);
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--color-red);
 }
