@@ -155,10 +155,11 @@ body {
 @media (max-width: 768px) {
     .app-header {
         padding: 0.8rem 1rem;
-        justify-content: center; /* Mobilon középre a logo és a gomb */
+        flex-direction: column; /* Mobilon egymás alá a logó és a gomb */
+        justify-content: center; /* Középre igazítás */
     }
     .app-header .logo-wrapper {
-        flex-basis: 100%; /* A logó vegye fel a teljes szélességet */
+        flex-basis: auto; /* Alapértelmezett méret */
         justify-content: center; /* Középre igazítás */
         margin-bottom: 1rem; /* Margó a gomb és a logó között */
     }
@@ -444,7 +445,7 @@ body {
 
 
 .appointment-table-wrapper {
-    overflow-x: auto; /* Ez továbbra is hasznos lehet nagyon széles táblázat esetén, de a kártya nézet megelőzi a problémát */
+    overflow-x: auto; /* Ezt hagyjuk meg, ha mégis túl széles lenne valami */
     border-radius: 0.75rem;
     box-shadow: var(--shadow-xl);
     border: 1px solid var(--border-color);
@@ -463,7 +464,7 @@ body {
     border-bottom: 1px solid var(--border-color);
     color: var(--text-primary);
     word-wrap: break-word;
-    white-space: normal;
+    white-space: normal; /* Fontos, hogy ez alapból normál legyen */
 }
 .appointment-table th {
     background-color: #262D38;
@@ -612,36 +613,57 @@ body {
     }
     .appointment-table td {
         border-bottom: 1px solid var(--border-color);
-        display: block;
+        display: flex; /* Flexbox a label és a tartalom mellé igazításához */
+        justify-content: space-between; /* Elosztja a labelt és a tartalmat */
+        align-items: center; /* Vertikális középre igazítás */
         font-size: 0.95em; /* Kicsit nagyobb betűméret */
         text-align: right;
-        padding: 1rem 1.4rem;
-        position: relative; /* Pozícionáláshoz */
+        padding: 0.8rem 1.4rem; /* Kisebb padding felül-alul */
+        word-break: break-word; /* Szavak tördelése, ha szükséges */
+        white-space: normal; /* Fontos, hogy ne legyen no-wrap */
     }
     .appointment-table td::before {
         content: attr(data-label) ": ";
-        float: left;
+        flex-shrink: 0; /* Ne zsugorodjon */
         font-weight: bold;
         text-transform: uppercase;
         color: var(--text-secondary);
         font-size: 0.85em;
-        margin-right: 0.5rem;
-        position: absolute; /* Fix pozíció */
-        left: 1.4rem; /* Paddinghoz igazítva */
+        margin-right: 0.8rem; /* Növelt margó */
+        text-align: left; /* Címke balra igazítása */
     }
     .appointment-table td:last-child {
         border-bottom: 0;
     }
     .appointment-table .status-badge {
         float: none;
-        display: inline-block; /* Hogy ne vegyen fel teljes szélességet */
+        display: inline-block;
         text-align: center;
-        margin-top: 0.8rem;
-        min-width: 100px; /* Minimum szélesség a badge-nek */
+        margin-top: 0.8rem; /* Kicsit feljebb van a badge a kép alapján, ha külön sorban volt */
+        min-width: 100px;
+        /* Lehetséges javítás: Ha a badge is flex elemen belül van, akkor align-self-end/start is lehet */
+        margin-left: auto; /* Jobbra igazítás flexboxban */
     }
 
-    /* Utolsó cella, ha nincs címkéje */
-    .appointment-table td:empty {
-        display: none; /* Üres cellák elrejtése */
+    /* Különleges kezelés a cím és leírás celláknál, ha több soros tartalom van */
+    .appointment-table td[data-label="Cím"],
+    .appointment-table td[data-label="Leírás"] {
+        flex-direction: column; /* Ezek a cellák oszlop elrendezésűek legyenek */
+        align-items: flex-start; /* Balra igazítás */
+        text-align: left; /* Szöveg balra igazítása */
     }
+    .appointment-table td[data-label="Cím"]::before,
+    .appointment-table td[data-label="Leírás"]::before {
+        margin-right: 0; /* Nincs jobbra margó */
+        margin-bottom: 0.4rem; /* Alatta legyen a szöveg */
+        position: static; /* Vegyük ki az abszolút pozícionálást */
+    }
+    .appointment-table td[data-label="Cím"] div.text-secondary {
+        width: 100%; /* Hogy a város és irányítószám is tördelődjön */
+        text-align: left; /* Balra igazítás */
+    }
+
+
+    /* Utolsó cella, ha nincs címkéje (korábbi hiba) - ezt már a JS oldalról kezeljük. */
+    /* A .appointment-table td:empty szabály valószínűleg nem kell, mert minden cellának van data-labelje */
 }
