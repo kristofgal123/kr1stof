@@ -5,38 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jégvarázs - Belépés</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-astro-dark flex items-center justify-center min-h-screen">
-    <div class="login-panel w-full max-w-lg shadow-xl">
-        <div class="login-header flex flex-col items-center mb-8">
-            <img src="https://scontent.fbud7-3.fna.fbcdn.net/v/t39.30808-6/308205810_529236395870033_4423189269356599666_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MpL-n6X2FLMQ7kNvwHGAr7h&_nc_oc=AdkTUfeobRm63e_c0hrqtmHq_e7TN10vPmlto7wUROXVwANo8khupg7sRLZmlxeMH5wXTXC79voQt9g7iPWNttw2&_nc_zt=23&_nc_ht=scontent.fbud7-3.fna&_nc_gid=Cs0PUcIInWZik51tHY7bzw&oh=00_AfTVZMZfPwN3-aeXFoShzRprBzNozg-R2UUJLp1I46TC0A&oe=68773E3D" alt="Jégvarázs Logo">
-            <h2 class="login-title text-center">Jégvarázs Portál</h2>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient">
+    <main class="login-container">
+        <div class="login-header">
+            <img src="https://scontent.fbud7-3.fna.fbcdn.net/v/t39.30808-6/308205810_529236395870033_4423189269356599666_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MpL-n6X2FLMQ7kNvwEyvnYQ&_nc_oc=AdmJ-mU5BWl3vJ-G0sORTMRSu964SqDn0dM57Qi1LPag5LtM2KeLs6Sz8BrBH9tSL-OO5EnsiskWbReeudSORA-a&_nc_zt=23&_nc_ht=scontent.fbud7-3.fna&_nc_gid=pwklrd36WNBsOtB45gd7vA&oh=00_AfSIYbIZbh1fr4OJ_4tfEIp-KoD85Q7p4N3g6OPYeE542w&oe=68781F3D" alt="Jégvarázs Logo" class="logo">
+            <h1 class="title">Jégvarázs</h1>
         </div>
-        <form id="loginForm">
-            <div class="mb-4">
-                <label class="block text-secondary text-sm font-medium mb-2" for="password">
-                    Jelszó
-                </label>
-                <input
-                    type="password"
-                    id="password"
-                    class="w-full py-2 px-3 rounded-md leading-tight focus:outline-none"
-                    placeholder="Írd be a jelszót"
-                    value="teszt"
-                >
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">Felhasználónév</label>
+                <input type="text" id="username" name="username" required>
             </div>
-            <p id="errorMessage" class="text-danger-color text-xs italic mb-4 text-center hidden"></p>
-            <div class="flex items-center justify-center mt-6">
-                <button
-                    type="submit"
-                    class="btn btn-primary btn-login"
-                >
-                    Belépés
-                </button>
+            <div class="form-group">
+                <label for="password">Jelszó</label>
+                <input type="password" id="password" name="password" required>
             </div>
+            <button type="submit" class="btn btn-primary w-full mt-6">Belépés</button>
+            <p id="loginMessage" class="text-error text-center mt-4 hidden"></p>
         </form>
-    </div>
-    <script src="login.js"></script>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
